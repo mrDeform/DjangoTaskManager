@@ -8,13 +8,16 @@
 </head>
 <body>
 {% for task in tasks %}
-<center>
-    <p>Номер задачи:{{task.id}}</p>
-    <p>Название задачи:{{task.title}}</p>
-    <p>Описание задачи:{{task.task_description}}</p>
-    <p>Срок задачи:{{task.deadline}}</p>
-    <p>ID менеджера:{{task.manager_id}}</p>
-</center>
+<div class="project-container">
+    <div class="project-switch"><==</div>
+    <section class="project">
+        <h2 class="project__title">{{task.title}}</h2>
+        <p class="project__description">Описание задачи:{{task.task_description}}</p>
+        <p class="project__deadline">Срок задачи:{{task.deadline}}</p>
+        <p class="project__manager">ID менеджера:{{task.manager_id}}</p>
+    </section>
+    <div class="project-switch">==></div>
+</div>
 <br>
 {% endfor %}
 </body>

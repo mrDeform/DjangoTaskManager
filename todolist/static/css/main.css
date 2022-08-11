@@ -1,3 +1,27 @@
 body {
     background-color: LemonChiffon;
 }
+
+.project-container {
+    display: flex;
+}
+
+.project {
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 16px;
+}
+
+.project__title {
+    text-align: center;
+}
+
+.project-switch {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6px;
+    margin: 10px;
+    cursor: pointer;
+}
