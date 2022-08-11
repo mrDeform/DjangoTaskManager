@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <title>Title</title>
+</head>
+<body>
+{% for task in tasks %}
+<center>
+    <p>Номер задачи:{{task.id}}</p>
+    <p>Название задачи:{{task.title}}</p>
+    <p>Описание задачи:{{task.task_description}}</p>
+    <p>Срок задачи:{{task.deadline}}</p>
+    <p>ID менеджера:{{task.manager_id}}</p>
+</center>
+<br>
+{% endfor %}
+</body>
+</html>
