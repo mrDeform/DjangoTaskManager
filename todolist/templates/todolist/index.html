@@ -1,24 +1,16 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    <title>Title</title>
-</head>
-<body>
-{% for task in tasks %}
+{% extends "main.html" %}
+{% block content %}
+{% if tasks %}
 <div class="project-container">
     <div class="project-switch"><==</div>
     <section class="project">
-        <h2 class="project__title">{{task.title}}</h2>
-        <p class="project__description">Описание задачи:{{task.task_description}}</p>
-        <p class="project__deadline">Срок задачи:{{task.deadline}}</p>
-        <p class="project__manager">ID менеджера:{{task.manager_id}}</p>
+        <h2 class="project__title">{{tasks.title}}</h2>
+        <p class="project__description">Описание задачи:{{tasks.1.task_description}}</p>
+        <p class="project__deadline">Срок задачи:{{tasks.1.deadline}}</p>
+        <p class="project__manager">ID менеджера:{{tasks.1.manager_id}}</p>
     </section>
     <div class="project-switch">==></div>
 </div>
 <br>
-{% endfor %}
-</body>
-</html>
+{% endif %}
+{% endblock %}

@@ -1,3 +1,5 @@
+{% extends "main.html" %}
+{% block content %}
 <form method = "post">
     <p>Какой id изменить:<input type="number" name="task_id"></p>
     <p>На что изменить</p>
@@ -6,3 +8,4 @@
     <p>Срок задачи:<input type="date" name="deadline"></p>
     <p><input type="submit" value="Обновить"></p>
 </form>
+{% endblock %}

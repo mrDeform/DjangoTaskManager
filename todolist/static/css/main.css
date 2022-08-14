@@ -1,5 +1,6 @@
 body {
     background-color: LemonChiffon;
+    width: 100%;
 }
 
 .project-container {
@@ -25,3 +26,44 @@ body {
     margin: 10px;
     cursor: pointer;
 }
+
+.menu {
+    display: flex;
+    padding: 0;
+}
+
+.menu__item {
+    list-style: none;
+    padding: 8px 12px;
+    border: 1px solid black;
+}
+
+.menu__item:hover {
+    background-color: green;
+}
+
+.menu__item a {
+    text-decoration: none;
+    text-transform: uppercase;
+    color: black;
+}
+
+.page__wrapper {
+    max-width: 1024px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.page__navigation {
+    margin: 0 auto;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
