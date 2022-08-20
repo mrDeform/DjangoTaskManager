@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
-from .models import Task
 from django.contrib.auth.models import User
+from rest_framework import generics, viewsets
+from .serializers import TaskSerializer
+from .models import Task
 
 
 @csrf_exempt
@@ -49,3 +51,8 @@ def update_task(request):
         task_upd.deadline = request.POST["deadline"]
         task_upd.save()
         return redirect('index')
+
+
+class TaskViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer

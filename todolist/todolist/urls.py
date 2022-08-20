@@ -15,11 +15,19 @@ Including another URLconf
 """
 from django.conf import settings
 from django.contrib import admin
+from rest_framework import routers
 from django.urls import include, path, re_path
 from django.views.generic.base import RedirectView
+from logic.views import *
+
+
+router = routers.DefaultRouter()
+router.register(r'logic', TaskViewSet)
+print(router.urls)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('logic.urls')),
     re_path(r'^favicon\.ico$', RedirectView.as_view(url='/static/favicon.ico', permanent=True)),
+    path('api/v1/', include(router.urls))
 ]
