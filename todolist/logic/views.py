@@ -1,3 +1,5 @@
+from django.core.mail import send_mail
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
@@ -61,3 +63,24 @@ class TaskViewSet(viewsets.ModelViewSet):
 class TodoViewSet(viewsets.ModelViewSet):
     queryset = ToDo.objects.all()
     serializer_class = ToDoSerializer
+
+
+@csrf_exempt
+def send_todo_to_email(request):
+    if request.method == "GET":
+        to_do = ToDo.objects.get(id=request.GET["todo_id"])
+        responsible_email = to_do.responsible.email
+        mail = send_mail(subject='Вам задание №{}'.format(to_do.id),
+                         message='Задание: {0}.\nОписание: {1}.'.format(to_do.title, to_do.todo_description),
+                         from_email='necht0_0@mail.ru',
+                         recipient_list=[responsible_email],
+                         fail_silently=False)
+        try:
+            if mail:
+                return HttpResponse('<div><br><br><h2>Письмо успешно отправлено</h2><br></div>')
+            else:
+                return HttpResponse('<div><br><br><h2>Ошибка отправки письма</h2><br></div>')
+        except:
+            return HttpResponse('<div><br><br><h2>Ошибка данных</h2><br></div>')
+    else:
+        return HttpResponse('<div><br><br><h2>Метод не определен</h2><br><h3>Данный метод не назначен</h3></div>')

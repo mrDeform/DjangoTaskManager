@@ -28,6 +28,7 @@ class ToDo(models.Model):
     date_update = models.DateTimeField('Дата изменения', auto_now=True)
     deadline = models.DateField('Срок выполнения')
     is_complete = models.BooleanField('Завершено', default=False)
+    responsible = models.ForeignKey(User, null=True,  on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = 'Задание'

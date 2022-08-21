@@ -135,3 +135,10 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.BrowsableAPIRenderer'
     ],
 }
+
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = '465'
+EMAIL_HOST_USER = 'necht0_0@mail.ru'
+EMAIL_HOST_PASSWORD = 'AWSdjSfciPnAJjVtmMmi'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
