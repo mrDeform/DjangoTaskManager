@@ -4,17 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script type="text/javascript" src="{% static 'js/functions.js' %}"></script>
 </head>
 <body>
     <div class="page__wrapper">
-        <nav class="page__navigation">
-            <ul class="menu">
-                <li class="menu__item"><a href="{%url 'index'%}">Главная</a></li>
-                <li class="menu__item"><a href="{%url 'add_task'%}">Добавить проект</a></li>
-                <li class="menu__item"><a href="{%url 'update_task'%}">Обновить проект</a></li>
-                <li class="menu__item"><a href="{%url 'delete_task'%}">Удалить проект</a></li>
-            </ul>
-        </nav>
+        <div class="page__navigation-wrapper">
+            <nav class="page__navigation">
+                <ul class="menu">
+                    <li class="menu__item"><a href="{%url 'index'%}">Главная</a></li>
+                    <li class="menu__item"><a href="{%url 'add_task'%}">Проекты</a></li>
+                    <li class="menu__item"><a href="{%url 'update_task'%}">Зарегистрироваться</a></li>
+                    <!-- <li class="menu__item"><a href="{%url 'delete_task'%}">Удалить проект</a></li> -->
+                </ul>
+            </nav>
+        </div>
         <div class="content">
         {% block content %} {% endblock %}
         </div>

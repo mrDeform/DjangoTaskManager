@@ -1,16 +1,41 @@
 {% extends "main.html" %}
 {% block content %}
 {% if tasks %}
-<div class="project-container">
-    <div class="project-switch"><==</div>
-    <section class="project">
-        <h2 class="project__title">{{tasks.title}}</h2>
-        <p class="project__description">Описание задачи:{{tasks.1.task_description}}</p>
-        <p class="project__deadline">Срок задачи:{{tasks.1.deadline}}</p>
-        <p class="project__manager">ID менеджера:{{tasks.1.manager_id}}</p>
+
+<main class="mainPage">
+  <aside class="projectsList">
+    <div class="projectsList__header">
+      <h2>Список проектов</h2> 
+      <div class="plus-icon"></div>
+    </div>
+    <ul class="projectsList__wrapper">
+      {% for task in tasks %}
+      <li class="projectsListItem">
+        <div  class="edit-icon"></div>
+        <div class="delete-icon"></div>
+        <span>{{task.title}}</span>
+      </li>
+      {% endfor%}
+    </ul>
+  </aside>
+  <div class="project">
+    <section class="project__wrapper">
+      <h2 class="project__title">{{tasks.1.title}}</h2>
+      <p>Описание задачи: {{tasks.1.task_description}}</p>
+      <p>Срок задачи: {{tasks.1.deadline}}</p>
+      <p>ID менеджера: {{tasks.1.manager_id}}</p>
+      <div class="project__tasks">
+        <h3>Список задач</h3>
+        <div class="plus-icon"></div>
+      </div>
+      <div class="task">
+        <label class="task__item"><input type='checkbox' /> {title}</label>
+        <div class="edit-icon"></div>
+        <div class="delete-icon"></div>
+      </div>
     </section>
-    <div class="project-switch">==></div>
-</div>
+  </div>
+</main>
 <br>
 {% endif %}
 {% endblock %}
