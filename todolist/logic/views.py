@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from rest_framework import generics, viewsets
-from .serializers import TaskSerializer
-from .models import Task
+from .serializers import TaskSerializer, ToDoSerializer
+from .models import Task, ToDo
 
 
 @csrf_exempt
@@ -56,3 +56,8 @@ def update_task(request):
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
+
+
+class TodoViewSet(viewsets.ModelViewSet):
+    queryset = ToDo.objects.all()
+    serializer_class = ToDoSerializer
