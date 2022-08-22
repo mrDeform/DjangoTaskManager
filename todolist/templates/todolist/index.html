@@ -1,6 +1,7 @@
 {% extends "main.html" %}
 {% block content %}
 {% if tasks %}
+{% load static %}
 
 <main class="mainPage">
   <aside class="projectsList">
@@ -9,33 +10,45 @@
       <div class="plus-icon"></div>
     </div>
     <ul class="projectsList__wrapper">
-      {% for task in tasks %}
-      <li class="projectsListItem">
-        <div  class="edit-icon"></div>
-        <div class="delete-icon"></div>
-        <span>{{task.title}}</span>
-      </li>
-      {% endfor%}
+
     </ul>
   </aside>
   <div class="project">
     <section class="project__wrapper">
-      <h2 class="project__title">{{tasks.1.title}}</h2>
-      <p>Описание задачи: {{tasks.1.task_description}}</p>
-      <p>Срок задачи: {{tasks.1.deadline}}</p>
-      <p>ID менеджера: {{tasks.1.manager_id}}</p>
-      <div class="project__tasks">
-        <h3>Список задач</h3>
-        <div class="plus-icon"></div>
-      </div>
-      <div class="task">
-        <label class="task__item"><input type='checkbox' /> {title}</label>
-        <div class="edit-icon"></div>
-        <div class="delete-icon"></div>
-      </div>
+     <!-- <div class="project__tasks">
+       <h3>Список задач</h3>
+       <div class="plus-icon"></div>
+     </div> -->
+<!--      <div class="task">-->
+<!--        <label class="task__item"><input type='checkbox' /> {title}</label>-->
+<!--        <div class="edit-icon"></div>-->
+<!--        <div class="delete-icon"></div>-->
+<!--      </div>-->
     </section>
   </div>
 </main>
 <br>
+
+<template id="projectList">
+      <li class="projectsListItem">
+        <div  class="edit-icon"></div>
+        <div class="delete-icon"></div>
+        <span class="projectListTitle"></span>
+      </li>
+</template>
+
+<template id="project">
+    <div class="project__container">
+      <h2 class="project__title"></h2>
+      <p id="projectDescription"></p>
+      <p id="projectDeadline"></p>
+      <p id="projectManager"></p>
+    </div>
+
+</template>
+
+<script type="text/javascript" src="{% static 'js/functions.js' %}"></script>
+
+
 {% endif %}
 {% endblock %}

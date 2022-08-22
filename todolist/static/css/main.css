@@ -72,6 +72,11 @@ body {
     margin: 0;
 }
 
+.project__container {
+  display: flex;
+  flex-direction: column;
+}
+
 /* ProjectsList */
 
 .projectsList {
