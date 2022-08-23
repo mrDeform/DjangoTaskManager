@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from rest_framework import generics, viewsets
 from .serializers import TaskSerializer, ToDoSerializer
 from .models import Task, ToDo
+from rest_framework.permissions import IsAuthenticated
+from .permissions import IsAdminOrManager, IsAdminOrManagerOrResponsible
 
 
 @csrf_exempt
@@ -55,14 +57,40 @@ def update_task(request):
         return redirect('index')
 
 
-class TaskViewSet(viewsets.ModelViewSet):
+class TaskAPIList(generics.ListCreateAPIView):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
+    permission_classes = (IsAuthenticated, )
 
 
-class TodoViewSet(viewsets.ModelViewSet):
+class TaskAPIUpdate(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+    permission_classes = (IsAdminOrManager, )
+
+
+class TaskAPIDestroy(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+    permission_classes = (IsAdminOrManager, )
+
+
+class TodoAPIList(generics.ListCreateAPIView):
     queryset = ToDo.objects.all()
     serializer_class = ToDoSerializer
+    permission_classes = (IsAuthenticated, )
+
+
+class TodoAPIUpdate(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ToDo.objects.all()
+    serializer_class = ToDoSerializer
+    permission_classes = (IsAdminOrManagerOrResponsible, )
+
+
+class TodoAPIDestroy(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ToDo.objects.all()
+    serializer_class = ToDoSerializer
+    permission_classes = (IsAdminOrManagerOrResponsible, )
 
 
 @csrf_exempt

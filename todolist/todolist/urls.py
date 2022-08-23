@@ -14,20 +14,24 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 # from django.conf import settings
+# from rest_framework import routers
 from django.contrib import admin
-from rest_framework import routers
 from django.urls import include, path, re_path
 from django.views.generic.base import RedirectView
 from logic.views import *
 
-
-router = routers.DefaultRouter()
-router.register(r'task', TaskViewSet)
-router.register(r'todo', TodoViewSet)
+# router = routers.DefaultRouter()
+# router.register(r'task', TaskViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('logic.urls')),
     re_path(r'^favicon\.ico$', RedirectView.as_view(url='/static/favicon.ico', permanent=True)),
-    path('api/v1/', include(router.urls))
+    # path('api/v1/', include(router.urls))
+    path('api/v1/task/', TaskAPIList.as_view()),
+    path('api/v1/task/<int:pk>/', TaskAPIUpdate.as_view()),
+    path('api/v1/task/<int:pk>/', TaskAPIDestroy.as_view()),
+    path('api/v1/todo/', TodoAPIList.as_view()),
+    path('api/v1/todo/<int:pk>/', TodoAPIUpdate.as_view()),
+    path('api/v1/todo/<int:pk>/', TodoAPIDestroy.as_view()),
 ]
