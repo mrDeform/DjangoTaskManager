@@ -1,13 +1,37 @@
+from django.contrib.auth import login
 from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
-from rest_framework import generics, viewsets
-from .serializers import TaskSerializer, ToDoSerializer
-from .models import Task, ToDo
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import generics
+from .forms import RegisterUserForm
+from .models import Task, ToDo
+from .serializers import TaskSerializer, ToDoSerializer
 from .permissions import IsAdminOrManager, IsAdminOrManagerOrResponsible
+
+
+class RegisterUser(View):
+    template_name = 'todolist/register.html'
+
+    def get(self, request):
+        context = {
+            'form': RegisterUserForm()
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        form = RegisterUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+            return redirect('index')
+        context = {
+            'form': form
+        }
+        return render(request, self.template_name, context)
 
 
 @csrf_exempt
@@ -18,6 +42,9 @@ def index(request):
     elif request.method == "POST":
         return redirect('add_task')
 
+
+def about(request):
+    return render(request, "todolist/about.html")
 
 @csrf_exempt
 def add_task(request):

@@ -1,7 +1,8 @@
 {% extends "main.html" %}
+{% block title %}Project management{% endblock title %}
 {% block content %}
-{% if tasks %}
 {% load static %}
+{% if  user.is_authenticated %}
 
 <main class="mainPage">
   <aside class="projectsList">
@@ -13,6 +14,7 @@
 
     </ul>
   </aside>
+{% if tasks %}
   <div class="project">
     <section class="project__wrapper">
      <!-- <div class="project__tasks">
@@ -48,7 +50,10 @@
 </template>
 
 <script type="text/javascript" src="{% static 'js/functions.js' %}"></script>
-
-
 {% endif %}
+
+{% else %}
+<h2>Для просмотра данной страницы требуется авторизация</h2>
+{% endif %}
+
 {% endblock %}
