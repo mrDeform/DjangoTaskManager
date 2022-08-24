@@ -16,7 +16,7 @@
                 </ul>
                 {% if user.is_authenticated %}
                 <ul class="menu">
-                    <li class="menu__item">Пользователь: {{ user }} </li>
+                    <li class="menu__user"><p>Пользователь: {{ user }} </p></li>
                     <li class="menu__item"><a href="{%url 'logout'%}">Выйти</a></li>
                 {% else %}
                 </ul>

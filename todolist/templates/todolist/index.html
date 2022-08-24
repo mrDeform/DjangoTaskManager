@@ -33,18 +33,22 @@
 
 <template id="projectList">
       <li class="projectsListItem">
-        <div  class="edit-icon"></div>
-        <div class="delete-icon"></div>
+        <a class="edit-icon" ></a>
+        <a class="delete-icon"></a>
         <span class="projectListTitle"></span>
       </li>
 </template>
 
 <template id="project">
     <div class="project__container">
-      <h2 class="project__title"></h2>
-      <p id="projectDescription"></p>
-      <p id="projectDeadline"></p>
-      <p id="projectManager"></p>
+        <h2 class="project__title"></h2>
+        <p id="projectDescription"></p>
+        <p id="projectDeadline"></p>
+        <p id="projectManager"></p>
+        <div class="project__tasks">
+        <h3>Список задач</h3>
+        <div class="plus-icon"></div>
+    </div>
     </div>
 
 </template>

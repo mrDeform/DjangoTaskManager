@@ -14,7 +14,7 @@ from .permissions import IsAdminOrManager, IsAdminOrManagerOrResponsible
 
 
 class RegisterUser(View):
-    template_name = 'todolist/register.html'
+    template_name = 'registration/register.html'
 
     def get(self, request):
         context = {
@@ -27,7 +27,7 @@ class RegisterUser(View):
         if form.is_valid():
             user = form.save()
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-            return redirect('index')
+            return redirect('about')
         context = {
             'form': form
         }
