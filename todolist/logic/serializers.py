@@ -3,7 +3,7 @@ from .models import Task, ToDo
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    manager = serializers.CharField(default=serializers.CurrentUserDefault)
+    # manager = serializers.HiddenField (default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Task
@@ -11,6 +11,9 @@ class TaskSerializer(serializers.ModelSerializer):
 
 
 class ToDoSerializer(serializers.ModelSerializer):
+    # for the task chain in the future
+    parent_todo = serializers.HiddenField
+
     class Meta:
         model = ToDo
         fields = "__all__"

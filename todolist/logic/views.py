@@ -1,3 +1,4 @@
+import logging
 from django.contrib.auth import login
 from django.core.mail import send_mail
 from django.http import HttpResponse
@@ -11,6 +12,8 @@ from .forms import RegisterUserForm
 from .models import Task, ToDo
 from .serializers import TaskSerializer, ToDoSerializer
 from .permissions import IsAdminOrManager, IsAdminOrManagerOrResponsible
+
+logger = logging.getLogger(__name__)
 
 
 class RegisterUser(View):
@@ -65,6 +68,8 @@ def delete_task(request):
     if request.method == "GET":
         return render(request, "todolist/delete_task.html")
     elif request.method == "POST":
+        logger.info(f'Пользователь {request.user} удалил "id"={request.POST["delete_id"]} '
+                    f'"title"={Task.objects.get(id=request.POST["delete_id"]).title}')
         Task(
             id=request.POST["delete_id"],
         ).delete()
@@ -76,6 +81,8 @@ def update_task(request):
     if request.method == "GET":
         return render(request, "todolist/update_task.html")
     elif request.method == "POST":
+        logger.info(f'Пользователь {request.user} изменил "id"={request.POST["task_id"]} '
+                    f'"title"={Task.objects.get(id=request.POST["task_id"]).title}')
         task_upd = Task.objects.get(id=request.POST["task_id"])
         task_upd.title = request.POST["title"]
         task_upd.task_description = request.POST["task_description"]
