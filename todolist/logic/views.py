@@ -49,6 +49,7 @@ def index(request):
 def about(request):
     return render(request, "todolist/about.html")
 
+
 @csrf_exempt
 def add_task(request):
     if request.method == "GET":
@@ -57,8 +58,8 @@ def add_task(request):
         Task(
             title=request.POST["title"],
             task_description=request.POST["task_description"],
-            manager=User.objects.get(id=request.POST["manager_id"]),
             deadline=request.POST["deadline"],
+            manager=request.user,
         ).save()
         return redirect('index')
 

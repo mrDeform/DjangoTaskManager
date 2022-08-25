@@ -1,10 +1,9 @@
 {% extends "main.html" %}
 {% block content %}
 <form method = "post">
-    <p>Название задачи:<input type="text" name="title"></p>
-    <p>Описание задачи:<input type="text" name="task_description"></p>
-    <p>Срок задачи:<input type="date" name="deadline"></p>
-    <p>Кто создал:<input type="number" name="manager_id"></p>
-    <p><input type="submit" value="Добавить"></p>
+    <label class = "form-label">Название задачи:<input type="text" name="title"></label>
+    <label class = "form-label">Описание задачи:<input type="text" name="task_description"></label>
+    <label class = "form-label">Срок задачи:<input type="date" name="deadline"></label>
+    <label class = "form-label"><input type="submit" value="Добавить"></label>
 </form>
 {% endblock %}
