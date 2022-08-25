@@ -16,7 +16,11 @@
                 </ul>
                 {% if user.is_authenticated %}
                 <ul class="menu">
+                    {% if user.is_staff %}
+                    <li class="menu__item"><a href="admin/">админ: {{ user }} </a></li>
+                    {% else %}
                     <li class="menu__user"><p>Пользователь: {{ user }} </p></li>
+                    {% endif %}
                     <li class="menu__item"><a href="{%url 'logout'%}">Выйти</a></li>
                 {% else %}
                 </ul>
