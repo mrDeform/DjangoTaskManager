@@ -17,7 +17,7 @@
                 {% if user.is_authenticated %}
                 <ul class="menu">
                     {% if user.is_staff %}
-                    <li class="menu__item"><a href="admin/">админ: {{ user }} </a></li>
+                    <li class="menu__item"><a href="../admin/">админ: {{ user }} </a></li>
                     {% else %}
                     <li class="menu__user"><p>Пользователь: {{ user }} </p></li>
                     {% endif %}

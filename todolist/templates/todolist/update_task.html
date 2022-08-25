@@ -1,11 +1,11 @@
 {% extends "main.html" %}
 {% block content %}
 <form method = "post">
-    <p>Какой id изменить:<input type="number" name="task_id"></p>
-    <p>На что изменить</p>
-    <p>Название задачи:<input type="text" name="title"></p>
-    <p>Описание задачи:<input type="text" name="task_description"></p>
-    <p>Срок задачи:<input type="date" name="deadline"></p>
+    <input readonly hidden type="number" name="task_id" value="{{task.id}}">
+    <p>Что изменить</p>
+    <p>Название задачи:<input type="text" name="title" value="{{task.title}}"></p>
+    <p>Описание задачи:<input type="text" name="task_description" value="{{task.task_description}}"></p>
+    <p>Срок задачи:<input type="date" name="deadline" value='{{task.deadline|date:"Y-m-d"}}'></p>
     <p><input type="submit" value="Обновить"></p>
 </form>
 {% endblock %}

@@ -1,0 +1,20 @@
+{% extends "main.html" %}
+{% block title %}Создание{% endblock title %}
+{% block content %}
+<form method = "post">
+    <input readonly hidden type="number" name="task_id" value="{{task_id}}">
+    <label class = "form-label">Название задания:<input type="text" name="title"></label>
+    <label class = "form-label">Описание задания:<input type="text" name="todo_description"></label>
+    <label class = "form-label">Срок задачи:<input type="date" name="deadline"></label>
+
+    <select defaultvalue="" class="form-control" name="responsible">
+        <option value="">--------</option>
+        {% for u in users %}
+        <option value="{{u.id}}">{{u}}</option>
+        {% endfor %}
+    </select>
+
+    <label class = "form-label"><input type="submit" value="Добавить"></label>
+</form>
+
+{% endblock %}
