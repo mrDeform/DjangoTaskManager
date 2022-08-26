@@ -1,7 +1,6 @@
 import logging
 from django.contrib.auth import login
 from django.core.mail import send_mail
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
@@ -54,12 +53,19 @@ def about(request):
 def add_task(request):
     if request.method == "GET":
         return render(request, "todolist/create_task.html")
+
     elif request.method == "POST":
         data = request.POST
+
+        if data["deadline"]:
+            deadline = data["deadline"]
+        else:
+            deadline = '2050-01-01'
+
         Task(
             title=data["title"],
             task_description=data["task_description"],
-            deadline=data["deadline"],
+            deadline=deadline,
             manager=request.user,
         ).save()
         return redirect('index')
@@ -67,15 +73,13 @@ def add_task(request):
 
 @csrf_exempt
 def delete_task(request):
-    if request.method == "GET":
-        return render(request, "todolist/delete_task.html", {"task_id": task_id, 'user': user})
-    elif request.method == "POST":
-        logger.info(f'Пользователь {request.user} удалил "id"={request.POST["delete_id"]} '
-                    f'"title"={Task.objects.get(id=request.POST["delete_id"]).title}')
-        Task(
-            id=request.POST["delete_id"],
-        ).delete()
-        return redirect('index')
+    id_t = request.GET["id"]
+    task = Task(id=id_t)
+
+    logger.info(f'Пользователь {request.user} удалил Task "id"={id_t} title={task.title}')
+
+    task.delete()
+    return redirect('index')
 
 
 @csrf_exempt
@@ -84,13 +88,20 @@ def update_task(request):
         task_id = request.GET.get('id')
         task = Task.objects.get(id=task_id)
         return render(request, "todolist/update_task.html", {"task": task})
+
     elif request.method == "POST":
         logger.info(f'Пользователь {request.user} изменил "id"={request.POST["task_id"]} '
                     f'"title"={Task.objects.get(id=request.POST["task_id"]).title}')
+
+        if request.POST["deadline"]:
+            deadline = request.POST["deadline"]
+        else:
+            deadline = '2050-01-01'
+
         task_upd = Task.objects.get(id=request.POST["task_id"])
         task_upd.title = request.POST["title"]
         task_upd.task_description = request.POST["task_description"]
-        task_upd.deadline = request.POST["deadline"]
+        task_upd.deadline = deadline
         task_upd.save()
         return redirect('index')
 
@@ -107,9 +118,14 @@ def add_todo(request):
             responsible = None
         else:
             responsible = User.objects.get(id=data["responsible"])
+        if data["deadline"]:
+            deadline = data["deadline"]
+        else:
+            deadline = '2050-01-01'
+
         ToDo(title=data["title"],
              todo_description=data["todo_description"],
-             deadline=data["deadline"],
+             deadline=deadline,
              is_complete=False,
              task=Task.objects.get(id=data["task_id"]),
              responsible=responsible
@@ -121,18 +137,44 @@ def add_todo(request):
 def update_todo(request):
     if request.method == "GET":
         todo_id = request.GET.get('id')
-        todo = ToDo.objects.get(id='todo_id')
+        todo = ToDo.objects.get(id=todo_id)
         users = User.objects.all()
         return render(request, "todolist/update_todo.html", {"todo": todo, 'users': users})
+
     elif request.method == "POST":
-        logger.info(f'Пользователь {request.user} изменил "id"={request.POST["todo_id"]} '
-                    f'"title"={ToDo.objects.get(id=request.POST["todo_id"]).title}')
-        task_upd = Task.objects.get(id=request.POST["task_id"])
-        task_upd.title = request.POST["title"]
-        task_upd.task_description = request.POST["task_description"]
-        task_upd.deadline = request.POST["deadline"]
-        task_upd.save()
+
+        if request.POST["responsible"] == '':
+            responsible = None
+        else:
+            responsible = User.objects.get(id=request.POST["responsible"])
+
+        if request.POST["deadline"]:
+            deadline = request.POST["deadline"]
+        else:
+            deadline = '2050-01-01'
+
+        try:
+            complete = request.POST["is_complete"]
+        except:
+            complete = False
+        logger.info(f'Пользователь {request.user} изменил "id"={request.POST["todo_id"]} "title"={ToDo.objects.get(id=request.POST ["todo_id"]).title}')
+        todo_upd = ToDo.objects.get(id=request.POST["todo_id"])
+        todo_upd.title = request.POST["title"]
+        todo_upd.todo_description = request.POST["todo_description"]
+        todo_upd.deadline = deadline
+        todo_upd.is_complete = complete
+        todo_upd.responsible = responsible
+        todo_upd.save()
         return redirect('index')
+
+
+@csrf_exempt
+def delete_todo(request):
+    logger.info(f'Пользователь {request.user} удалил ToDo "id"={request.GET["id"]} '
+                f'"title"={ToDo.objects.get(id=request.GET["id"]).title}')
+
+    ToDo(id=request.GET["id"]).delete()
+    return redirect('index')
 
 
 class TaskAPIList(generics.ListCreateAPIView):
@@ -174,19 +216,23 @@ class TodoAPIDestroy(generics.RetrieveUpdateDestroyAPIView):
 @csrf_exempt
 def send_todo_to_email(request):
     if request.method == "GET":
-        to_do = ToDo.objects.get(id=request.GET["todo_id"])
+        to_do = ToDo.objects.get(id=request.GET["id"])
         responsible_email = to_do.responsible.email
         mail = send_mail(subject='Вам задание №{}'.format(to_do.id),
-                         message='Задание: {0}.\nОписание: {1}.'.format(to_do.title, to_do.todo_description),
+                         message='Добрый день\nВам выдано задание: {0}.\nОписание: {1}.'.format(to_do.title, to_do.todo_description),
                          from_email='necht0_0@mail.ru',
                          recipient_list=[responsible_email],
                          fail_silently=False)
         try:
             if mail:
-                return HttpResponse('<div><br><br><h2>Письмо успешно отправлено</h2><br></div>')
+                message = 'Письмо успешно отправлено'
+                return render(request, "todolist/mail.html", {"message": message})
             else:
-                return HttpResponse('<div><br><br><h2>Ошибка отправки письма</h2><br></div>')
+                message = 'Ошибка отправки письма'
+                return render(request, "todolist/mail.html", {"message": message})
         except:
-            return HttpResponse('<div><br><br><h2>Ошибка данных</h2><br></div>')
+            message = 'Ошибка данных'
+            return render(request, "todolist/mail.html", {"message": message})
     else:
-        return HttpResponse('<div><br><br><h2>Метод не определен</h2><br><h3>Данный метод не назначен</h3></div>')
+        message = 'Метод не определен'
+        return render(request, "todolist/mail.html", {"message": message})

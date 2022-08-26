@@ -20,6 +20,7 @@ body {
   display: flex;
   width: 1024px;
   margin: 0 auto;
+  margin-bottom: 15px;
 }
 
 .content {
@@ -74,10 +75,20 @@ body {
     display: flex;
     margin-top: 25px;
     margin-bottom: 10px;
+    flex-direction: column;
 }
 
 .project__tasks h3 {
     margin: 0;
+}
+
+.tasks__header {
+  display: flex;
+  margin-bottom: 14px;
+}
+
+.task__input {
+  width: 30px !important;
 }
 
 .project__container {
@@ -185,6 +196,14 @@ body {
 
 .delete-icon {
   background-image: url('../images/delete.svg');
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  margin-right: 2px;
+}
+
+.mail-icon {
+  background-image: url('../images/mail.svg');
   width: 24px;
   height: 24px;
   cursor: pointer;

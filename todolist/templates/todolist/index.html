@@ -8,7 +8,7 @@
   <aside class="projectsList">
     <div class="projectsList__header">
       <h2>Список проектов</h2> 
-      <div class="plus-icon"></div>
+      <a class="plus-icon" href="/add_task"></a>
     </div>
     <ul class="projectsList__wrapper">
 
@@ -17,15 +17,6 @@
 {% if tasks %}
   <div class="project">
     <section class="project__wrapper">
-     <!-- <div class="project__tasks">
-       <h3>Список задач</h3>
-       <div class="plus-icon"></div>
-     </div> -->
-<!--      <div class="task">-->
-<!--        <label class="task__item"><input type='checkbox' /> {title}</label>-->
-<!--        <div class="edit-icon"></div>-->
-<!--        <div class="delete-icon"></div>-->
-<!--      </div>-->
     </section>
   </div>
 </main>
@@ -45,12 +36,26 @@
         <p id="projectDescription"></p>
         <p id="projectDeadline"></p>
         <p id="projectManager"></p>
+
         <div class="project__tasks">
-        <h3>Список задач</h3>
-        <div class="plus-icon"></div>
-    </div>
+          <div class="tasks__header">
+            <h3>Список задач</h3>
+            <a class="plus-icon"></a>
+          </div>
+        </div>
     </div>
 
+</template>
+
+<template id="task">
+  <div class="task">
+    <input class="task__input" type='checkbox' />
+    <label class="task__item">
+    </label>
+    <a class="edit-icon"></a>
+    <a class="delete-icon"></a>
+    <a class="mail-icon"></a>
+  </div>
 </template>
 
 <script type="text/javascript" src="{% static 'js/functions.js' %}"></script>

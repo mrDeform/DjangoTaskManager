@@ -1,21 +1,31 @@
 {% extends "main.html" %}
-{% block title %}Создание{% endblock title %}
+{% block title %}Изменение{% endblock title %}
 {% block content %}
 <form method = "post">
-    <input readonly hidden type="number" name="todo_id" value="{{todo_id}}">
-    <p>Что изменить</p>
-    <label class = "form-label">Название задания:<input type="text" name="title"></label>
-    <label class = "form-label">Описание задания:<input type="text" name="todo_description"></label>
-    <label class = "form-label">Срок задачи:<input type="date" name="deadline"></label>
+    <input readonly hidden type="number" name="todo_id" value="{{todo.id}}">
+    <h2>Что изменить</h2>
+    <label class="form-label" for="update-title">Название задачи:</label><input id="update-title" type="text" name="title" value="{{todo.title}}">
+    <label class="form-label" for="update-description">Описание задачи:</label><input id="update-description" type="text" name="todo_description" value="{{todo.todo_description}}">
+    <label class="form-label" for="update-date">Срок задачи:</label><input id="update-date" type="date" name="deadline" value="{{todo.deadline|date:"Y-m-d"}}">
+    <label class="form-label" for="update-responsible">Ответственный:</label>
+    <div>
+        <select class="form-control" id="update-responsible" name="responsible">
+            <option value="">--------</option>
+            {% for u in users %}
+                {% if u == todo.responsible %}
+            <option value="{{u.id}}" selected>{{u}}</option>
+                {% else %}
+            <option value="{{u.id}}">{{u}}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+    {% if todo.is_complete %}
+    <p><label>Выполнение</label><input type="checkbox" name="is_complete" value="True" checked></p>
+    {% else %}
+    <p><label>Выполнение</label><input type="checkbox" name="is_complete" value="True"></p>
+    {% endif %}
+    <p><input type="submit" value="Обновить"></p>
 
-    <select defaultvalue="" class="form-control" name="responsible">
-        <option value="">--------</option>
-        {% for u in users %}
-        <option value="{{u.id}}">{{u}}</option>
-        {% endfor %}
-    </select>
-
-    <label class = "form-label"><input type="submit" value="Добавить"></label>
 </form>
-
 {% endblock %}

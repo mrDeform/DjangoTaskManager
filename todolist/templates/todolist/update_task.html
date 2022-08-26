@@ -1,11 +1,12 @@
 {% extends "main.html" %}
+{% block title %}Изменение{% endblock title %}
 {% block content %}
 <form method = "post">
     <input readonly hidden type="number" name="task_id" value="{{task.id}}">
-    <p>Что изменить</p>
-    <p>Название задачи:<input type="text" name="title" value="{{task.title}}"></p>
-    <p>Описание задачи:<input type="text" name="task_description" value="{{task.task_description}}"></p>
-    <p>Срок задачи:<input type="date" name="deadline" value='{{task.deadline|date:"Y-m-d"}}'></p>
+    <h2>Что изменить</h2>
+    <label class="form-label">Название проекта:<input type="text" name="title" value="{{task.title}}"></label>
+    <label class="form-label">Описание проекта:<input type="text" name="task_description" value="{{task.task_description}}"></label>
+    <label class="form-label">Срок проекта:<input type="date" name="deadline" value="{{task.deadline|date:"Y-m-d"}}"></label>
     <p><input type="submit" value="Обновить"></p>
 </form>
 {% endblock %}
